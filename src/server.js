@@ -5,7 +5,8 @@ const app = express();
 app.use(express.static(path.join(__dirname, "build")));
 
 app.get("/montyhall", function (req, res) {
-  const results = runSimulation(1000);
+  const { nrOfSimulations } = req.query;
+  const results = runSimulation(nrOfSimulations);
   return res.send(results);
 });
 
