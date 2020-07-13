@@ -1,11 +1,12 @@
 const express = require("express");
-const bodyParser = require("body-parser");
 const path = require("path");
+const { runSimulation } = require("./montyHall");
 const app = express();
 app.use(express.static(path.join(__dirname, "build")));
 
-app.get("/ping", function (req, res) {
-  return res.send("pong");
+app.get("/montyhall", function (req, res) {
+  const results = runSimulation(1000);
+  return res.send(results);
 });
 
 app.get("/", function (req, res) {

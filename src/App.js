@@ -5,7 +5,7 @@ import axios from "axios";
 
 function App() {
   axios
-    .get("/ping")
+    .get("/montyhall")
     .then(function (response) {
       // handle success
       console.log(response);
