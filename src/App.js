@@ -11,7 +11,17 @@ function App() {
   const [state, setState] = useState({
     nrOfSimulations: 999,
     switchDoors: true,
+    responseText: "",
   });
+
+  const getResponseText = (response) => {
+    if (state.switchDoors) {
+      return `You switched door and won ${response.nrOfSwitchWins} times!
+        Keeping the door would have won  ${response.nrOfNoSwitchWins} times.`;
+    }
+    return `You kept your door and won ${response.nrOfNoSwitchWins} times!
+    Switching door would have won  ${response.nrOfSwitchWins} times.`;
+  };
   const handleRunSimulation = () => {
     axios
       .get("/montyhall", {
@@ -20,6 +30,7 @@ function App() {
         },
       })
       .then(function (response) {
+        setState({ ...state, responseText: getResponseText(response.data) });
         // handle success
         console.log(response);
       })
@@ -34,6 +45,10 @@ function App() {
 
   const handleNrOfSimulationsChange = (event) => {
     setState({ ...state, nrOfSimulations: event.target.value });
+  };
+
+  const handleSwitchDoorsChange = () => {
+    setState({ ...state, switchDoors: !state.switchDoors });
   };
 
   return (
@@ -57,7 +72,7 @@ function App() {
               control={
                 <Checkbox
                   checked={state.switchDoors}
-                  // onChange={handleChange}
+                  onChange={handleSwitchDoorsChange}
                   name="checkedB"
                   color="primary"
                 />
@@ -70,6 +85,7 @@ function App() {
         <Button variant="contained" onClick={handleRunSimulation}>
           Run simulation
         </Button>
+        <p>{state.responseText}</p>
       </div>
     </div>
   );
