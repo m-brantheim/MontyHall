@@ -15,6 +15,9 @@ function App() {
   });
 
   const getResponseText = (response) => {
+    if (response.errorMessage) {
+      return response.errorMessage;
+    }
     if (state.switchDoors) {
       return `You switched door and won ${response.nrOfSwitchWins} times!
         Keeping the door would have won  ${response.nrOfNoSwitchWins} times.`;
@@ -22,6 +25,7 @@ function App() {
     return `You kept your door and won ${response.nrOfNoSwitchWins} times!
     Switching door would have won  ${response.nrOfSwitchWins} times.`;
   };
+
   const handleRunSimulation = () => {
     axios
       .get("/montyhall", {
