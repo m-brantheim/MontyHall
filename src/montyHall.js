@@ -48,4 +48,7 @@ const runSimulation = (nrOfSimulations) => {
 
 module.exports = {
   runSimulation,
+  getDoors,
+  shuffle,
+  getGoatIndex,
 };
